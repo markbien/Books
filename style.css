@@ -8,6 +8,7 @@ html {
     --tertiary-theme: #126E82;
     --generic-theme: #132C33;
     --text-color: white;
+    --item-complete: #CAF7E3;
 }
 
 body {
@@ -40,6 +41,7 @@ main {
     border: none;
     border-radius: 10px;
     background-color: var(--tertiary-theme);
+    transition: background 0.5s ease;
 }
 
 .card > img {
@@ -132,4 +134,9 @@ span {
     top: 5px;
     right: 5px;
     cursor: pointer;
+}
+
+.toggleRead {
+    background-color: var(--item-complete);
+    color: var(--generic-theme);
 }

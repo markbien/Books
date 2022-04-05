@@ -19,7 +19,7 @@ function Book(name, author, pages, hasBeenRead){
     this.hasBeenRead = hasBeenRead;
 }
 
-function createBookEntryInDOM(index, title, author, pages){
+function createBookEntryInDOM(title, author, pages){
     // Create the DIVs first
     const card = document.createElement('div');
     const divDetails = document.createElement('div');
@@ -38,12 +38,12 @@ function createBookEntryInDOM(index, title, author, pages){
     card.classList.add('card');
     divDetails.classList.add('book-details');
     divOptions.classList.add('book-options');
-    toggleStatus.classList.toggle('toggleRead');
+    // toggleStatus.classList.toggle('toggleRead');
     removeBook.classList.add('removeButton');
 
     // Set the attributes
     img.setAttribute('src', 'images/book-cover.png');
-    removeBook.setAttribute('data-index', index);
+    card.setAttribute('data-name', title);
 
     // Text contents
     bookTitle.textContent = title;
@@ -64,13 +64,20 @@ function createBookEntryInDOM(index, title, author, pages){
     divOptions.appendChild(toggleStatus);
     divOptions.appendChild(removeBook);
     cardContainer.appendChild(card);
+
+    // event listener
+    removeBook.addEventListener('click', () => {
+        removeFromLibrary(title);
+    });
+
+    toggleStatus.addEventListener('click', ()=>{
+        const cardToToggle = document.querySelector(`[data-name="${title}"]`);
+        cardToToggle.classList.toggle('toggleRead');
+        
+    })
 }
 
 function addBookToLibrary(){
-    // Create tracker for the number of items currently in
-    // the myLibrary array
-    let index = myLibrary.length;
-
     // Create a new book based on the values from the inputs
     const newBook = new Book(bookName.value, bookAuthor.value, bookPages.value, false);
 
@@ -78,16 +85,27 @@ function addBookToLibrary(){
     myLibrary.push(newBook);
 
     // Create a new entry in the DOM based on the inputs
-    createBookEntryInDOM(index, bookName.value, bookAuthor.value, bookPages.value);
-    
-    // increment the index based on the current number of items in the myLibrary array
-    index++;
+    createBookEntryInDOM(bookName.value, bookAuthor.value, bookPages.value);
 
     // Clear inputs in the add book section
     clearInputs();
 
     // remove the addBook window
     addBookContainer.style.display = 'none';
+}
+
+// responsible for removing the book from the library
+function removeFromLibrary(title){
+    // locate the card via the data attribute
+    const cardToRemove = document.querySelector(`[data-name="${title}"]`);
+    cardContainer.removeChild(cardToRemove);
+
+    // remove the book from myLibrary array
+    // get the index of the item to be removed using findIndex
+    const itemToRemove = myLibrary.findIndex(book => book.name === `${title}`);
+    // remove the item from the myLibrary array
+    // splice([index of the item], [how many items to remove]);
+    myLibrary.splice(itemToRemove, 1);
 }
 
 // responsible for clearing the values of the input container/window
