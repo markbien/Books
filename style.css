@@ -1,89 +1,126 @@
 * {
-    margin: 0;
-    padding: 0;
-  }
-  
-  :root {
-    --primary-color: #FD5D5D;
-    --secondary-color: #FF8080;
-    --tertiary-color: #FFF7BC;
-    --general-color: #C0EDA6;
-  }
-  
-  body {
-    box-sizing: border-box;
-    position: relative;
-    background-color: var(--primary-color);
-  }
-  
-  .option {
-    position: fixed;
-    bottom: 0;
-    right: 0;
-  }
-  
-  .btn {
-    padding: 7px 15px;
-    background-color: var(--tertiary-color);
-    border: 1px solid var(--tertiary-color);
-    border-radius: 5px;
-    
-    transition: all 0.4s ease;
-  }
-  
-  .btn:hover {
-    background-color: var(--secondary-color);
-    color: white;
-    cursor: pointer;
-  }
-  
-  .btn:active {
-    transform: scale(0.95);
-  }
-  
-  .addBookContainer {
-    background-color: rgba(0,0,0,0.4);
-    height: 100vh;
-    
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    
-    transform: translate(-100%, -100%);
-    transition: all 0.5s ease;
-  }
-  
-  .message-box-container {
-    background-color: var(--secondary-color);
-    position: relative;
-    border-radius: 20px;
-    padding: 50px;
-    width: 300px;
-    display: flex;
-    flex-direction: column;
-    gap: 7px;
-  }
-  
-  .message-box-container > span {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    color: white;
-    cursor: pointer;
-  }
-  
-  .message-box-buttons {
-    display: flex;
-    justify-content: center;
-  }
-  
-  .show {
-    transform: translate(0, 0);
-  }
-  
-  input {
-    font-size: 1rem;
-    padding: 2px 2px 2px 10px;
-    border: 1px solid white;
-    border-radius: 5px;
-  }
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --primary-color: #fd5d5d;
+  --secondary-color: #ff8080;
+  --tertiary-color: #fff7bc;
+  --general-color: #c0eda6;
+}
+
+body {
+  box-sizing: border-box;
+  position: relative;
+  background-color: var(--primary-color);
+}
+
+.option {
+  position: fixed;
+  bottom: 0;
+  right: 0;
+}
+
+.btn {
+  padding: 7px 15px;
+  background-color: var(--tertiary-color);
+  border: 1px solid var(--tertiary-color);
+  border-radius: 5px;
+
+  transition: all 0.4s ease;
+}
+
+.btn:hover {
+  background-color: var(--secondary-color);
+  color: white;
+  cursor: pointer;
+}
+
+.btn:active {
+  transform: scale(0.95);
+}
+
+.addBookContainer {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.4);
+  height: 100vh;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  transform: translate(-100%, -100%);
+  transition: all 0.7s ease-in-out;
+}
+
+.message-box-container {
+  background-color: var(--secondary-color);
+  position: relative;
+  border-radius: 20px;
+  padding: 50px;
+  width: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.message-box-container > span {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  color: white;
+  cursor: pointer;
+}
+
+.message-box-buttons {
+  display: flex;
+  justify-content: center;
+}
+
+.show {
+  transform: translate(0, 0);
+}
+
+input {
+  font-size: 1rem;
+  padding: 2px 2px 2px 10px;
+  border: 1px solid white;
+  border-radius: 5px;
+}
+
+main {
+  max-width: 90%;
+  margin: 0 auto;
+  padding-top: 100px;
+}
+
+.card-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.card,
+.card-options {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card-options {
+  gap: 10px;
+}
+
+.card {
+  background-color: var(--secondary-color);
+  flex-direction: column;
+}
+
+.card > * {
+  margin-top: 20px;
+}
