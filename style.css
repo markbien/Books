@@ -1,142 +1,89 @@
-html {
+* {
+    margin: 0;
+    padding: 0;
+  }
+  
+  :root {
+    --primary-color: #FD5D5D;
+    --secondary-color: #FF8080;
+    --tertiary-color: #FFF7BC;
+    --general-color: #C0EDA6;
+  }
+  
+  body {
     box-sizing: border-box;
-}
-
-:root {
-    --main-theme: #D8E3E7;
-    --secondary-theme: #51C4D3;
-    --tertiary-theme: #126E82;
-    --generic-theme: #132C33;
-    --text-color: white;
-    --item-complete: #CAF7E3;
-}
-
-body {
-    margin: 0;
-    padding: 0;
-
-    background-color: var(--main-theme);
-    color: var(--text-color);
-    padding: 50px;
-    font-family: Arial, Helvetica, sans-serif;
-}
-
-main {
-    background-color: var(--secondary-theme);
-    padding: 50px;
-}
-
-.card-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 30px;
-}
-
-.card {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-
-    border: none;
-    border-radius: 10px;
-    background-color: var(--tertiary-theme);
-    transition: background 0.5s ease;
-}
-
-.card > img {
-    width: 250px;
-}
-
-.card * {
-    margin: 0;
-    padding: 0;
-}
-
-.card > * {
-    margin: 10px 0;
-}
-
-.card button {
-    background-color: var(--text-color);
-    border: none;
-    border-radius: 10px;
-    padding: 5px 10px;
-    transition: all 0.3s ease;
-    margin: 0 5px;
-}
-
-.card button:hover {
-    background-color: var(--generic-theme);
-    color: var(--text-color);
-}
-
-.option {
-    position: fixed;
-    bottom: 0;
-    right: 0;
-}
-
-.option > button {
-    padding: 10px;
-    background-color: var(--tertiary-theme);
-    color: var(--text-color);
-    border: none;
-    cursor: pointer;
-}
-
-.addBookContainer {
-    position: fixed;
-    z-index: 1;
-    background: rgba(0,0,0,0.8);
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-
-    display: none;
-    justify-content: center;
-    align-items: center;
-}
-
-.subContainer {
-    display: flex;
-    flex-direction: column;
-    padding: 30px 15px 15px 15px;
-    gap: 5px;
-
-    background-color: var(--tertiary-theme);
-    border-radius: 3px;
     position: relative;
-}
-
-.subContainer input{
-    font-size: 1.1rem;
-    padding: 3px;
-}
-
-.subContainer button {
-    background-color: var(--text-color);
-    border: none;
-    padding: 3px;
-    border-radius: 3px;
-    text-transform: uppercase;
-    font-weight: 700;
-}
-
-.subContainer button:hover {
-    background-color: var(--secondary-theme);
-    color: var(--text-color);
-}
-
-span {
-    position: absolute;
-    top: 5px;
-    right: 5px;
+    background-color: var(--primary-color);
+  }
+  
+  .option {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+  }
+  
+  .btn {
+    padding: 7px 15px;
+    background-color: var(--tertiary-color);
+    border: 1px solid var(--tertiary-color);
+    border-radius: 5px;
+    
+    transition: all 0.4s ease;
+  }
+  
+  .btn:hover {
+    background-color: var(--secondary-color);
+    color: white;
     cursor: pointer;
-}
-
-.toggleRead {
-    background-color: var(--item-complete);
-    color: var(--generic-theme);
-}
+  }
+  
+  .btn:active {
+    transform: scale(0.95);
+  }
+  
+  .addBookContainer {
+    background-color: rgba(0,0,0,0.4);
+    height: 100vh;
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    transform: translate(-100%, -100%);
+    transition: all 0.5s ease;
+  }
+  
+  .message-box-container {
+    background-color: var(--secondary-color);
+    position: relative;
+    border-radius: 20px;
+    padding: 50px;
+    width: 300px;
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+  }
+  
+  .message-box-container > span {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: white;
+    cursor: pointer;
+  }
+  
+  .message-box-buttons {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .show {
+    transform: translate(0, 0);
+  }
+  
+  input {
+    font-size: 1rem;
+    padding: 2px 2px 2px 10px;
+    border: 1px solid white;
+    border-radius: 5px;
+  }
