@@ -1,4 +1,4 @@
-const myLibrary = [];
+let myLibrary = [];
 const addBookContainer = document.querySelector(".addBookContainer");
 const openAddBookContainer = document.querySelector(".option > .btn");
 const closeAddBookContainer = document.querySelector(
@@ -23,6 +23,7 @@ function toggleMessageBox() {
 function addBookToArray() {
   const newBook = new Book(bookName.value, bookAuthor.value, bookPages.value);
   myLibrary.push(newBook);
+  loadBooksToContainer();
   toggleMessageBox();
 }
 
@@ -39,10 +40,6 @@ closeAddBookContainer.addEventListener("click", toggleMessageBox);
 // add book to array
 addBook.addEventListener("click", function(){
   addBookToArray();
-  
-  // displays the recent item to the window
-  const lastItem = myLibrary[myLibrary.length-1];
-  displayBooks(lastItem.name, lastItem.author, lastItem.pages);
 });
 
 
@@ -57,12 +54,18 @@ function Book(name, author, pages) {
 }
 
 // Create DOM entry for each books
-function displayBooks(title, author, pages){
+function displayBooks(title, author, pages, hasBeenRead){
   // card containers
   const divCard = document.createElement('div');
   divCard.classList.add('card');
   const divCardOptions = document.createElement('div');
+  divCardOptions.dataset.index = myLibrary.length - 1;
   divCardOptions.classList.add('card-options');
+
+  // if has been read
+  if(hasBeenRead === true){
+    divCard.classList.add('completed');
+  }
 
   // containers for title, author, pages and read status
   const dispTitle = document.createElement('h1');
@@ -76,9 +79,14 @@ function displayBooks(title, author, pages){
   const btnMarkAsRead = document.createElement('button');
   btnMarkAsRead.classList.add('btn');
   btnMarkAsRead.textContent = "Mark as read/unread";
+  btnMarkAsRead.addEventListener('click', function(){
+    toggleRead(this);
+  });
+
   const btnRemoveBook = document.createElement('button');
   btnRemoveBook.classList.add('btn');
   btnRemoveBook.textContent = "Remove Book";
+  // btnRemoveBook.addEventListener('click', );
 
   // append items
   divCard.appendChild(dispTitle);
@@ -101,9 +109,23 @@ function displayBooks(title, author, pages){
 // myLibrary.push(book3);
 
 function loadBooksToContainer(){
+  clearCardContainer();
+
   for(let i = 0; i < myLibrary.length; i++){
     let book = myLibrary[i];
-    displayBooks(book.name, book.author, book.pages);
+    displayBooks(book.name, book.author, book.pages, book.hasBeenRead);
   }
 }
 
+function clearCardContainer(){
+  cardContainer.innerHTML = "";
+}
+
+function toggleRead(item){
+  const index = item.parentElement.dataset.index
+  myLibrary[index].hasBeenRead = !myLibrary[index].hasBeenRead;
+  console.log(myLibrary[index].hasBeenRead);
+
+  clearCardContainer();
+  loadBooksToContainer();
+}
