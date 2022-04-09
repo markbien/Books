@@ -35,3 +35,9 @@ function Book(name, author, pages) {
   this.pages = pages;
   this.hasBeenRead = false;
 }
+
+function loadBooksToContainer(){
+  for(book in myLibrary){
+    
+  }
+}

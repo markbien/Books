@@ -84,6 +84,7 @@ body {
 
 .show {
   transform: translate(0, 0);
+  position: fixed;
 }
 
 input {
@@ -119,6 +120,8 @@ main {
 .card {
   background-color: var(--secondary-color);
   flex-direction: column;
+  border-radius: 10px;
+  padding-bottom: 15px;
 }
 
 .card > * {
