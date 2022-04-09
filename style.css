@@ -16,6 +16,10 @@ body {
   background-color: var(--primary-color);
 }
 
+h1{
+  text-align: center;
+}
+
 .option {
   position: fixed;
   bottom: 0;
