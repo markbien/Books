@@ -131,3 +131,7 @@ main {
 .card > * {
   margin-top: 20px;
 }
+
+.card.completed {
+  background-color: rgba(132, 204, 22, 1);
+}
