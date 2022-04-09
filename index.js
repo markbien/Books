@@ -110,6 +110,8 @@ myLibrary.push(book1);
 myLibrary.push(book2);
 myLibrary.push(book3);
 
+// clear the card containre
+// then display the books again
 function loadBooksToContainer(){
   clearCardContainer();
 
@@ -119,10 +121,14 @@ function loadBooksToContainer(){
   }
 }
 
+// responsible for clearing the card containre
 function clearCardContainer(){
   cardContainer.textContent = "";
 }
 
+// remove book from the array
+// then clear the card containre
+// then re-populate the books
 function removeBook(){
   const bookTitleToRemove = this.parentNode.parentNode.firstChild.textContent;
   const index = myLibrary.findIndex(book => book.name === bookTitleToRemove);
@@ -133,6 +139,7 @@ function removeBook(){
   }
 }
 
+// changes the read status of the book
 function toggleRead(){
   const bookTitleToRemove = this.parentNode.parentNode.firstChild.textContent;
   const index = myLibrary.findIndex(book => book.name === bookTitleToRemove);
