@@ -1,0 +1,26 @@
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
+}
+
+:root {
+  --main-theme: #312e81;
+  --text-color: white;
+}
+
+body {
+  background: var(--main-theme);
+  color: var(--text-color);
+  padding: 50px 100px;
+}
+
+main {
+  
+}
+
+.card-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, 500px, 1fr);
+}
