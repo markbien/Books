@@ -12,15 +12,39 @@
 
 body {
   background: var(--main-theme);
-  color: var(--text-color);
-  padding: 50px 100px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 100px;
 }
 
 main {
-  
+  width: 70%;
+}
+
+.search-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.search-container input {
+  width: 400px;
+  font-size: 1.2rem;
+  padding: 3px 5px;
+  border-radius: 5px;
 }
 
 .card-container {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(450px, 1fr));
+  gap: 20px;
+}
+
+.card {
+  background-color: var(--text-color);
+  border-radius: 10px;
+  padding: 20px;
 }
