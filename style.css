@@ -15,12 +15,7 @@
 
 body {
   background: var(--secondary-theme);
-
-  /* display: flex;
-  justify-content: center;
-  align-items: center; */
   padding-top: 100px;
-
   position: relative;
 }
 
@@ -38,11 +33,7 @@ body,
   align-items: center;
 }
 
-
 .search-container {
-  /* display: flex;
-  justify-content: center;
-  align-items: center; */
   margin-bottom: 25px;
 }
 
@@ -63,11 +54,7 @@ input {
   background-color: var(--text-color);
   border-radius: 10px;
   padding: 20px;
-
-  /* display: flex; */
   flex-direction: column;
-  /* justify-content: center;
-  align-items: center; */
   text-align: center;
 }
 
@@ -103,7 +90,6 @@ input {
   background-color: #FFD36E;
   font-size: 1.2rem;
   padding: 4px 8px;
-
   transition: background-color 0.2s ease;
   cursor: pointer;
   border: none;
@@ -116,23 +102,18 @@ input {
 .addBookContainer {
   opacity: 0;
   display: none;
-
   position: fixed;
   background-color: rgba(0,0,0,0.6);
   top: 0;
   bottom: 0;
   right: 0;
   left: 0;
-
   animation: fadeInFromNone 0.4s ease;
 }
 
 .addBookContainer.show,
 .message-box-container {
-  /* display: flex; */
   flex-direction: column;
-  /* justify-content: center;
-  align-items: center; */
   opacity: 1;
 }
 
@@ -141,7 +122,6 @@ input {
   padding: 40px 30px 30px 30px;
   gap: 10px;
   border-radius: 10px;
-
   position: relative;
 }
 
