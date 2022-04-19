@@ -1,20 +1,5 @@
 const $ = document.querySelector.bind(document);
 
-const addBookContainer = $('.addBookContainer');
-const addBookButton = $('.option > .btn');
-const closeAddBook = $('.message-box-container > span');
-
-addBookButton.addEventListener('click', ()=> {
-    addBookContainer.classList.add('show');
-});
-
-closeAddBook.addEventListener('click', ()=> {
-    addBookContainer.classList.remove('show');
-    addBookContainer.querySelectorAll('input').forEach(inp => inp.value ="");
-});
-
-
-
 class Book {
     #title; 
     #author;
@@ -43,8 +28,8 @@ class Book {
         return this.#status;
     }
 
-    set status(newVal){
-        this.#status = newVal;
+    toggleStatus(){
+        this.#status = !this.#status;
     }
 
     showDetails(){
@@ -53,11 +38,40 @@ class Book {
 }
 
 const library = (()=>{
-    const newBook = new Book('H.P.', 'J.K.Rowlins', 1000);
-    newBook.pages = 1500;
-    newBook.showDetails();
+    let libraryArray = [];
+
+    const addBook = book => libraryArray.push(book);
+    const getBook = index => libraryArray[index];
+    const showBooks = ()=> {
+        return libraryArray;
+    }
+
+    return {addBook, getBook, showBooks};
 })();
 
 const displayController = (()=>{
+    const addBookContainer = $('.addBookContainer');
+    const addBookButton = $('.option > .btn');
+    const closeAddBook = $('.message-box-container > span');
+
+    addBookButton.addEventListener('click', ()=> {
+        addBookContainer.classList.add('show');
+    });
+
+    closeAddBook.addEventListener('click', ()=> {
+        addBookContainer.classList.remove('show');
+        addBookContainer.querySelectorAll('input').forEach(inp => inp.value ="");
+    });
+
     
+
+    // const newBook = new Book('H.P.', 'J.K.Rowlins', 1000);
+    // const newBook2 = new Book('ASDF', 'QWER', 500);
+    // library.addBook(newBook);
+    // library.addBook(newBook2);
+    // library.showBooks();
+
+    // console.log(library.getBook(0));
+    // library.getBook(0).toggleStatus();
+    // console.log(library.getBook(0));
 })();
