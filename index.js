@@ -45,23 +45,51 @@ const library = (()=>{
     const showBooks = ()=> {
         return libraryArray;
     }
+    const findBook = inp => {
+        libraryArray.find(book => {
+            return book.title.includes(inp);
+        })
+    };
 
-    return {addBook, getBook, showBooks};
+    return {addBook, getBook, showBooks, findBook};
 })();
 
 const displayController = (()=>{
+    const cardContainer = $('.card-container');
     const addBookContainer = $('.addBookContainer');
     const addBookButton = $('.option > .btn');
     const closeAddBook = $('.message-box-container > span');
+    const addNewBook = $('.message-box-buttons > .btn');
 
     addBookButton.addEventListener('click', ()=> {
         addBookContainer.classList.add('show');
     });
 
     closeAddBook.addEventListener('click', ()=> {
+        clearWindowAndEntries();
+    });
+
+    addNewBook.addEventListener('click', ()=>{
+        const bookTitle = $('#bookName');
+        const bookAuthor = $('#bookAuthor');
+        const bookPages = $('#bookPages');
+        
+        const newBook = new Book(bookTitle.value, bookAuthor.value, bookPages.value);
+        library.addBook(newBook);
+
+        clearWindowAndEntries();
+        clearDOMEntries();
+        createBookEntries();
+    });
+
+    function clearWindowAndEntries(){
         addBookContainer.classList.remove('show');
         addBookContainer.querySelectorAll('input').forEach(inp => inp.value ="");
-    });
+    }
+
+    function clearDOMEntries(){
+        cardContainer.innerHTML = '';
+    }
 
     function createBookEntries(){
         library.showBooks().forEach(book => {
@@ -69,8 +97,7 @@ const displayController = (()=>{
         });
     }
 
-    function createBookDOM(title, author, pages, status){
-        const cardContainer = $('.card-container');
+    function createBookDOM(title, author, pages, status){        
         const card = document.createElement('div');
         card.classList.add('card');
         const h1Title = document.createElement('h1');
@@ -112,9 +139,9 @@ const displayController = (()=>{
         cardContainer.appendChild(card);
     }
 
-    const newBook = new Book('H.P.', 'J.K.Rowlins', 1000);
+    // const newBook = new Book('H.P.', 'J.K.Rowlins', 1000);
     // const newBook2 = new Book('ASDF', 'QWER', 500);
-    library.addBook(newBook);
+    // library.addBook(newBook);
     // library.addBook(newBook2);
     // library.showBooks();
 
@@ -122,5 +149,7 @@ const displayController = (()=>{
     // library.getBook(0).toggleStatus();
     // console.log(library.getBook(0));
 
-    createBookEntries();
+    // createBookEntries();
+
+    return {clearDOMEntries};
 })();

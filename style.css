@@ -15,7 +15,7 @@
 
 body {
   background: var(--secondary-theme);
-  padding-top: 100px;
+  padding: 100px 0;
   position: relative;
 }
 
