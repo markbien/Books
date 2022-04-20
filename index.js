@@ -48,8 +48,7 @@ const library = (()=>{
         return libraryArray;
     }
     const findBook = inp => {
-        // return libraryArray.filter(book => book.title.toLowerCase().includes(inp.toLowerCase()));
-        
+        return libraryArray.filter(book => book.title.toLowerCase().includes(inp.toLowerCase()));        
     };
 
     return {addBook, getBook, showBooks, findBook, toggleReadStatus};
@@ -63,6 +62,9 @@ const displayController = (()=>{
     const addBookButton = $('.option > .btn');
     const closeAddBook = $('.message-box-container > span');
     const addNewBook = $('.message-box-buttons > .btn');
+    const searchBox = $('#searchBook');
+    const list = $('.search-container');
+    const ul = list.querySelector('ul');
 
     addBookButton.addEventListener('click', ()=> {
         addBookContainer.classList.add('show');
@@ -84,6 +86,8 @@ const displayController = (()=>{
         clearDOMEntries();
         createBookEntries();
     });
+
+    searchBox.addEventListener('keyup', showResults);
 
     function clearWindowAndEntries(){
         addBookContainer.classList.remove('show');
@@ -148,6 +152,21 @@ const displayController = (()=>{
             clearDOMEntries();
             createBookEntries();
         })
+    }
+
+    function showResults(){
+        const results = library.findBook(this.value);
+        ul.innerHTML = '';
+        results.forEach(result => {
+            showResultsInDom(result.title);
+        });
+    }
+
+    function showResultsInDom(result){
+        const item = document.createElement('li');
+        item.textContent = result;
+
+        ul.appendChild(item);
     }
 
     const newBook = new Book('H.P.', 'J.K.Rowlins', 1000);
