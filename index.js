@@ -1,5 +1,3 @@
-const $ = document.querySelector.bind(document);
-
 class Book {
     #title; 
     #author;
@@ -42,19 +40,24 @@ const library = (()=>{
 
     const addBook = book => libraryArray.push(book);
     const getBook = index => libraryArray[index];
+    const toggleReadStatus = bookName => {
+        const ind = libraryArray.findIndex(book => book.title === bookName);
+        libraryArray[ind].toggleStatus();
+    }
     const showBooks = ()=> {
         return libraryArray;
     }
     const findBook = inp => {
-        libraryArray.find(book => {
-            return book.title.includes(inp);
-        })
+        // return libraryArray.filter(book => book.title.toLowerCase().includes(inp.toLowerCase()));
+        
     };
 
-    return {addBook, getBook, showBooks, findBook};
+    return {addBook, getBook, showBooks, findBook, toggleReadStatus};
 })();
 
 const displayController = (()=>{
+    const $ = document.querySelector.bind(document);
+    const $$ = document.querySelectorAll.bind(document);
     const cardContainer = $('.card-container');
     const addBookContainer = $('.addBookContainer');
     const addBookButton = $('.option > .btn');
@@ -115,6 +118,7 @@ const displayController = (()=>{
         const readStatus = document.createElement('input');
         readStatus.setAttribute('type', 'checkbox');
         readStatus.setAttribute('id', 'readStatus');
+        readStatus.dataset.title = title;
         const btnDiv = document.createElement('div');
         const removeBTN = document.createElement('button');
         removeBTN.textContent = 'Remove book';
@@ -137,19 +141,29 @@ const displayController = (()=>{
         cardOptions.appendChild(btnDiv);
         btnDiv.appendChild(removeBTN);
         cardContainer.appendChild(card);
+
+        readStatus.addEventListener('click', function(){
+            const bookTitle = this.dataset.title;
+            library.toggleReadStatus(bookTitle);
+            clearDOMEntries();
+            createBookEntries();
+        })
     }
 
-    // const newBook = new Book('H.P.', 'J.K.Rowlins', 1000);
-    // const newBook2 = new Book('ASDF', 'QWER', 500);
-    // library.addBook(newBook);
-    // library.addBook(newBook2);
+    const newBook = new Book('H.P.', 'J.K.Rowlins', 1000);
+    const newBook2 = new Book('ASDF', 'QWER', 500);
+    const newBook3 = new Book('ASD', 'QWER', 500);
+    library.addBook(newBook);
+    library.addBook(newBook2);
+    library.addBook(newBook3);
     // library.showBooks();
 
     // console.log(library.getBook(0));
     // library.getBook(0).toggleStatus();
     // console.log(library.getBook(0));
 
-    // createBookEntries();
+    createBookEntries();
+    // return {clearDOMEntries};
 
-    return {clearDOMEntries};
+    
 })();

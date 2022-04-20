@@ -35,6 +35,47 @@ body,
 
 .search-container {
   margin-bottom: 25px;
+  flex-direction: column;
+  padding: 20px;
+  position: relative;
+}
+
+.search-container > ul{
+  display: none;
+  opacity: 0;
+}
+
+.search-container > ul.show {
+  opacity: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  list-style: none;
+  position: absolute;
+  top: 54px;
+
+  animation: fadeInFromNone 0.4s ease;
+}
+
+ul > li {
+  border: 1px solid white;
+  padding: 5px 15px;  
+  transition: all 0.3s ease;
+}
+
+ul > li:hover {
+  cursor: pointer;
+  transform: scaleX(1.1);
+  border-radius: 5px;
+}
+
+ul > li:nth-child(even) {
+  background-color: white;
+}
+
+ul > li:nth-child(odd) {
+  background-color: rgb(200, 197, 197);
 }
 
 input {
