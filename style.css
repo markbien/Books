@@ -40,43 +40,35 @@ body,
   position: relative;
 }
 
-.search-container > ul{
-  display: none;
-  opacity: 0;
-}
-
-.search-container > ul.show {
+.search-container > ul {
   opacity: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
   list-style: none;
   position: absolute;
   top: 54px;
-
-  animation: fadeInFromNone 0.4s ease;
 }
 
-ul > li {
-  border: 1px solid white;
-  padding: 5px 15px;  
-  transition: all 0.3s ease;
+li {
   width: 300px;
+  opacity: 0;
+  padding: 5px 15px;
+  transition: all 0.3s ease;
   border: 1px solid rgba(0,0,0,0.6);
 }
 
-ul > li:hover {
+li:hover {
   cursor: pointer;
-  transform: scaleX(1.1);
-  border-radius: 5px;
+  transform: scaleX(1.05);
 }
 
-ul > li:nth-child(even) {
+input#searchBook:focus + ul>li{
+  opacity: 1;
+}
+
+li:nth-child(even) {
   background-color: white;
 }
 
-ul > li:nth-child(odd) {
+li:nth-child(odd) {
   background-color: rgb(200, 197, 197);
 }
 

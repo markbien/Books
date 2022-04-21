@@ -44,7 +44,7 @@ const library = (()=>{
     }
 
     const toggleReadStatus = bookName => {
-        const ind = libraryArray.findIndex(book => book.title === bookName);
+        const ind = libraryArray.map(book => book.title).findIndex(title => title === bookName);
         libraryArray[ind].toggleStatus();
     }
     const showBooks = ()=> {
@@ -55,9 +55,8 @@ const library = (()=>{
     };
 
     const removeBook = bookTitle => {
-        const bookToRemove = libraryArray.findIndex(book => book.title = bookTitle);
+        const bookToRemove = libraryArray.map(book => book.title).findIndex(title => title === bookTitle);
         libraryArray.splice(bookToRemove, 1);
-        console.log(libraryArray);
     }
 
     return {addBook, showBooks, findBook, toggleReadStatus, removeBook};
@@ -176,6 +175,10 @@ const displayController = (()=>{
         results.forEach(result => {
             showResultsInDom(result.title);
         });
+
+        if(this.value === ''){
+            ul.innerHTML = '';
+        }
     }
 
     function showResultsInDom(result){
