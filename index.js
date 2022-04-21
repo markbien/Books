@@ -59,7 +59,11 @@ const library = (()=>{
         libraryArray.splice(bookToRemove, 1);
     }
 
-    return {addBook, showBooks, findBook, toggleReadStatus, removeBook};
+    function searchFilter(bookName){
+        return libraryArray.filter(book => book.title.toLowerCase().includes(bookName));
+    }
+
+    return {addBook, showBooks, findBook, toggleReadStatus, removeBook, searchFilter};
 })();
 
 const displayController = (()=>{
@@ -108,7 +112,7 @@ const displayController = (()=>{
 
     function createBookEntries(){
         library.showBooks().forEach(book => {
-            createBookDOM(book.title, book.author,  book.pages, book.status);
+            createBookDOM(book.title, book.author, book.pages, book.status);
         });
     }
 
@@ -169,23 +173,34 @@ const displayController = (()=>{
         });
     }
 
+    // function showResults(){
+    //     const results = library.findBook(this.value);
+    //     ul.innerHTML = '';
+    //     results.forEach(result => {
+    //         showResultsInDom(result.title);
+    //     });
+
+    //     if(this.value === ''){
+    //         ul.innerHTML = '';
+    //     }
+    // }
+
+    // function showResultsInDom(result){
+    //     const item = document.createElement('li');
+    //     item.textContent = result;
+
+    //     ul.appendChild(item);
+    // }
+
     function showResults(){
-        const results = library.findBook(this.value);
-        ul.innerHTML = '';
-        results.forEach(result => {
-            showResultsInDom(result.title);
-        });
-
-        if(this.value === ''){
-            ul.innerHTML = '';
+        // library.searchFilter(this.value.toLowerCase());
+        clearDOMEntries();
+        if(this.value === '') createBookEntries();
+        else {
+            library.searchFilter(this.value.toLowerCase()).forEach(book => {
+                createBookDOM(book.title, book.author, book.pages, book.status);
+            });
         }
-    }
-
-    function showResultsInDom(result){
-        const item = document.createElement('li');
-        item.textContent = result;
-
-        ul.appendChild(item);
     }
 
     const newBook = new Book('H.P.', 'J.K.Rowlins', 1000);
