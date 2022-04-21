@@ -29,10 +29,6 @@ class Book {
     toggleStatus(){
         this.#status = !this.#status;
     }
-
-    showDetails(){
-        console.log(`Book Name: ${this.#title}, Author: ${this.#author}, Pages: ${this.#pages}, Has been read: ${this.#status}`);
-    }
 }
 
 const library = (()=>{
@@ -173,27 +169,7 @@ const displayController = (()=>{
         });
     }
 
-    // function showResults(){
-    //     const results = library.findBook(this.value);
-    //     ul.innerHTML = '';
-    //     results.forEach(result => {
-    //         showResultsInDom(result.title);
-    //     });
-
-    //     if(this.value === ''){
-    //         ul.innerHTML = '';
-    //     }
-    // }
-
-    // function showResultsInDom(result){
-    //     const item = document.createElement('li');
-    //     item.textContent = result;
-
-    //     ul.appendChild(item);
-    // }
-
     function showResults(){
-        // library.searchFilter(this.value.toLowerCase());
         clearDOMEntries();
         if(this.value === '') createBookEntries();
         else {
