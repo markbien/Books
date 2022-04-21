@@ -39,7 +39,7 @@ const library = (()=>{
     let libraryArray = [];
 
     const addBook = book => libraryArray.push(book);
-    const getBook = index => libraryArray[index];
+    // const getBook = index => libraryArray[index];
     const toggleReadStatus = bookName => {
         const ind = libraryArray.findIndex(book => book.title === bookName);
         libraryArray[ind].toggleStatus();
@@ -51,7 +51,13 @@ const library = (()=>{
         return libraryArray.filter(book => book.title.toLowerCase().includes(inp.toLowerCase()));        
     };
 
-    return {addBook, getBook, showBooks, findBook, toggleReadStatus};
+    const removeBook = bookTitle => {
+        const bookToRemove = libraryArray.findIndex(book => book.title = bookTitle);
+        libraryArray.splice(bookToRemove, 1);
+        console.log(libraryArray);
+    }
+
+    return {addBook, showBooks, findBook, toggleReadStatus, removeBook};
 })();
 
 const displayController = (()=>{
@@ -126,6 +132,7 @@ const displayController = (()=>{
         const btnDiv = document.createElement('div');
         const removeBTN = document.createElement('button');
         removeBTN.textContent = 'Remove book';
+        removeBTN.dataset.title = title;
 
         h1Title.textContent = title;
         h3Author.textContent = author;
@@ -151,7 +158,13 @@ const displayController = (()=>{
             library.toggleReadStatus(bookTitle);
             clearDOMEntries();
             createBookEntries();
-        })
+        });
+
+        removeBTN.addEventListener('click', function(){
+            library.removeBook(this.dataset.title);
+            clearDOMEntries();
+            createBookEntries();
+        });
     }
 
     function showResults(){
