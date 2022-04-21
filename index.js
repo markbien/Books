@@ -38,8 +38,11 @@ class Book {
 const library = (()=>{
     let libraryArray = [];
 
-    const addBook = book => libraryArray.push(book);
-    // const getBook = index => libraryArray[index];
+    const addBook = book => {
+        const bookIndex = libraryArray.findIndex(bookie => bookie.title.toLowerCase() === book.title.toLowerCase());
+        if(bookIndex === -1) libraryArray.push(book);
+    }
+
     const toggleReadStatus = bookName => {
         const ind = libraryArray.findIndex(book => book.title === bookName);
         libraryArray[ind].toggleStatus();
@@ -188,14 +191,6 @@ const displayController = (()=>{
     library.addBook(newBook);
     library.addBook(newBook2);
     library.addBook(newBook3);
-    // library.showBooks();
-
-    // console.log(library.getBook(0));
-    // library.getBook(0).toggleStatus();
-    // console.log(library.getBook(0));
 
     createBookEntries();
-    // return {clearDOMEntries};
-
-    
 })();
