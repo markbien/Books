@@ -64,15 +64,16 @@ const library = (()=>{
 
 const displayController = (()=>{
     const $ = document.querySelector.bind(document);
-    const $$ = document.querySelectorAll.bind(document);
+    // const $$ = document.querySelectorAll.bind(document);
     const cardContainer = $('.card-container');
     const addBookContainer = $('.addBookContainer');
     const addBookButton = $('.option > .btn');
     const closeAddBook = $('.message-box-container > span');
     const addNewBook = $('.message-box-buttons > .btn');
     const searchBox = $('#searchBook');
-    const list = $('.search-container');
-    const ul = list.querySelector('ul');
+    const bookPages = $('#bookPages');
+    // const list = $('.search-container');
+    // const ul = list.querySelector('ul');
 
     addBookButton.addEventListener('click', ()=> {
         addBookContainer.classList.add('show');
@@ -96,6 +97,7 @@ const displayController = (()=>{
     });
 
     searchBox.addEventListener('keyup', showResults);
+    bookPages.addEventListener('keyup', checkInput);
 
     function clearWindowAndEntries(){
         addBookContainer.classList.remove('show');
@@ -179,6 +181,12 @@ const displayController = (()=>{
         }
     }
 
+    function checkInput(e){
+        if(this.value < 0){
+            this.value = Math.abs(this.value);
+        }
+    }
+
     const newBook = new Book('H.P.', 'J.K.Rowlins', 1000);
     const newBook2 = new Book('ASDF', 'QWER', 500);
     const newBook3 = new Book('ASD', 'QWER', 500);
@@ -188,3 +196,8 @@ const displayController = (()=>{
 
     createBookEntries();
 })();
+
+
+// TODO
+// Add function to save books to browser
+// prevent negative numbers in the input page number
