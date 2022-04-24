@@ -3,11 +3,11 @@ class Book {
     #author;
     #pages;
     #status;
-    constructor(title, author, pages){
+    constructor(title, author, pages, status = false){
         this.#title = title;
         this.#author = author;
         this.#pages = pages;
-        this.#status = false;
+        this.#status = status;
     }
 
     get title(){
@@ -55,11 +55,23 @@ const library = (()=>{
         libraryArray.splice(bookToRemove, 1);
     }
 
+    const saveToLocal = ()=> {
+        console.log(libraryArray)
+        localStorage.setItem('library', JSON.stringify(libraryArray));
+    }
+
+    const restoreLocal = () => {
+        const library = localStorage.getItem('library');
+        libraryArray = library.map(book => {
+
+        });
+    }
+
     function searchFilter(bookName){
         return libraryArray.filter(book => book.title.toLowerCase().includes(bookName));
     }
 
-    return {addBook, showBooks, findBook, toggleReadStatus, removeBook, searchFilter};
+    return {addBook, showBooks, findBook, toggleReadStatus, removeBook, searchFilter, saveToLocal, restoreLocal};
 })();
 
 const displayController = (()=>{
@@ -97,7 +109,13 @@ const displayController = (()=>{
     });
 
     searchBox.addEventListener('keyup', showResults);
-    bookPages.addEventListener('keyup', checkInput);
+    bookPages.onkeydown = function(e){
+        console.log(e.keyCode);
+        if(!((e.keyCode > 47 && e.keyCode < 58) || e.keyCode === 8 ||
+            (e.keyCode > 95 && e.keyCode < 106))){
+            return false;
+        }        
+    }
 
     function clearWindowAndEntries(){
         addBookContainer.classList.remove('show');
@@ -181,12 +199,6 @@ const displayController = (()=>{
         }
     }
 
-    function checkInput(e){
-        if(this.value < 0){
-            this.value = Math.abs(this.value);
-        }
-    }
-
     const newBook = new Book('H.P.', 'J.K.Rowlins', 1000);
     const newBook2 = new Book('ASDF', 'QWER', 500);
     const newBook3 = new Book('ASD', 'QWER', 500);
@@ -200,4 +212,3 @@ const displayController = (()=>{
 
 // TODO
 // Add function to save books to browser
-// prevent negative numbers in the input page number
