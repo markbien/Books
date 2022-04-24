@@ -42,6 +42,7 @@ const library = (()=>{
     const toggleReadStatus = bookName => {
         const ind = libraryArray.map(book => book.title).findIndex(title => title === bookName);
         libraryArray[ind].toggleStatus();
+        saveToLocal();
     }
     const showBooks = ()=> {
         return libraryArray;
@@ -53,18 +54,27 @@ const library = (()=>{
     const removeBook = bookTitle => {
         const bookToRemove = libraryArray.map(book => book.title).findIndex(title => title === bookTitle);
         libraryArray.splice(bookToRemove, 1);
+        saveToLocal();
     }
 
-    const saveToLocal = ()=> {
-        console.log(libraryArray)
-        localStorage.setItem('library', JSON.stringify(libraryArray));
+    function saveToLocal(){
+        let newArr = libraryArray.map(book => ({
+            title: book.title,
+            author: book.author,
+            pages: book.pages,
+            status: book.status
+        }));
+
+        localStorage.setItem('library', JSON.stringify(newArr));
     }
 
-    const restoreLocal = () => {
-        const library = localStorage.getItem('library');
-        libraryArray = library.map(book => {
+    function restoreLocal(){
+        let newArr = JSON.parse(localStorage.getItem('library'));
+        libraryArray = newArr ? newArr : [];
+    }
 
-        });
+    const JSONToBook = book => {
+        return new Book(book.title, book.author, book.pages, book.status);
     }
 
     function searchFilter(bookName){
@@ -76,7 +86,6 @@ const library = (()=>{
 
 const displayController = (()=>{
     const $ = document.querySelector.bind(document);
-    // const $$ = document.querySelectorAll.bind(document);
     const cardContainer = $('.card-container');
     const addBookContainer = $('.addBookContainer');
     const addBookButton = $('.option > .btn');
@@ -84,8 +93,6 @@ const displayController = (()=>{
     const addNewBook = $('.message-box-buttons > .btn');
     const searchBox = $('#searchBook');
     const bookPages = $('#bookPages');
-    // const list = $('.search-container');
-    // const ul = list.querySelector('ul');
 
     addBookButton.addEventListener('click', ()=> {
         addBookContainer.classList.add('show');
@@ -102,6 +109,8 @@ const displayController = (()=>{
         
         const newBook = new Book(bookTitle.value, bookAuthor.value, bookPages.value);
         library.addBook(newBook);
+
+        library.saveToLocal();
 
         clearWindowAndEntries();
         clearDOMEntries();
@@ -199,16 +208,32 @@ const displayController = (()=>{
         }
     }
 
-    const newBook = new Book('H.P.', 'J.K.Rowlins', 1000);
-    const newBook2 = new Book('ASDF', 'QWER', 500);
-    const newBook3 = new Book('ASD', 'QWER', 500);
-    library.addBook(newBook);
-    library.addBook(newBook2);
-    library.addBook(newBook3);
-
+    library.restoreLocal();
     createBookEntries();
 })();
 
 
 // TODO
 // Add function to save books to browser
+// Load data to browser
+// remove book updates the local storage
+// add option to clear local storage
+// has been read is not working again
+
+// addBook(newBook) {
+//     if (!this.isInLibrary(newBook)) {
+//       this.books.push(newBook)
+//     }
+//   }
+
+//   removeBook(title) {
+//     this.books = this.books.filter((book) => book.title !== title)
+//   }
+
+//   getBook(title) {
+//     return this.books.find((book) => book.title === title)
+//   }
+
+//   isInLibrary(newBook) {
+//     return this.books.some((book) => book.title === newBook.title)
+//   }
