@@ -42,6 +42,7 @@ const library = (()=>{
     const toggleReadStatus = bookName => {
         const ind = libraryArray.map(book => book.title).findIndex(title => title === bookName);
         libraryArray[ind].toggleStatus();
+        console.log(libraryArray[ind]);
         saveToLocal();
     }
     const showBooks = ()=> {
@@ -69,11 +70,11 @@ const library = (()=>{
     }
 
     function restoreLocal(){
-        let newArr = JSON.parse(localStorage.getItem('library'));
+        let newArr = JSON.parse(localStorage.getItem('library')).map(book => JSONtoBook(book));
         libraryArray = newArr ? newArr : [];
     }
 
-    const JSONToBook = book => {
+    const JSONtoBook = book => {
         return new Book(book.title, book.author, book.pages, book.status);
     }
 
