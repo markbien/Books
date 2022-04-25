@@ -35,8 +35,8 @@ const library = (()=>{
     let libraryArray = [];
 
     const addBook = book => {
-        const bookIndex = libraryArray.findIndex(bookie => bookie.title.toLowerCase() === book.title.toLowerCase());
-        if(bookIndex === -1) libraryArray.push(book);
+        const bookIndex = library.some(bookObj => book.title.toLowerCase() === bookObj.title.toLowerCase());
+        if(!bookIndex) libraryArray.push(book);
     }
 
     const toggleReadStatus = bookName => {
@@ -70,7 +70,8 @@ const library = (()=>{
     }
 
     function restoreLocal(){
-        let newArr = JSON.parse(localStorage.getItem('library')).map(book => JSONtoBook(book));
+        let newArr = JSON.parse(localStorage.getItem('library'));
+        if(newArr) newArr = newArr.map(book => JSONtoBook(book))
         libraryArray = newArr ? newArr : [];
     }
 
@@ -212,29 +213,3 @@ const displayController = (()=>{
     library.restoreLocal();
     createBookEntries();
 })();
-
-
-// TODO
-// Add function to save books to browser
-// Load data to browser
-// remove book updates the local storage
-// add option to clear local storage
-// has been read is not working again
-
-// addBook(newBook) {
-//     if (!this.isInLibrary(newBook)) {
-//       this.books.push(newBook)
-//     }
-//   }
-
-//   removeBook(title) {
-//     this.books = this.books.filter((book) => book.title !== title)
-//   }
-
-//   getBook(title) {
-//     return this.books.find((book) => book.title === title)
-//   }
-
-//   isInLibrary(newBook) {
-//     return this.books.some((book) => book.title === newBook.title)
-//   }
