@@ -35,7 +35,7 @@ const library = (()=>{
     let libraryArray = [];
 
     const addBook = book => {
-        const bookIndex = library.some(bookObj => book.title.toLowerCase() === bookObj.title.toLowerCase());
+        const bookIndex = libraryArray.some(bookObj => book.title.toLowerCase() === bookObj.title.toLowerCase());
         if(!bookIndex) libraryArray.push(book);
     }
 
