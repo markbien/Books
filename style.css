@@ -30,7 +30,7 @@ input, textarea, button, select {
 .container {
   display: grid;
   min-height: 100vh;
-  grid-template-columns: 1fr 4fr;
+  /* grid-template-columns: 1fr 4fr; */
   grid-template-rows: 50px 1fr 50px;
 }
 
@@ -47,22 +47,90 @@ input, textarea, button, select {
   color: white;
 }
 
-.header-links > ul{
+.header-links > ul {
   display: flex;
   list-style: none;
   gap: 25px;
 }
 
-.sidebar {
+.header-links li {
+  cursor: pointer;
+}
+
+.messagebox-background {
+  background-color: rgba(0,0,0,0.7);
+  position: absolute;
+  height: 100%;
+  width: 100%;
+
+  display: none;
+  /* display: flex; */
+  justify-content: center;
+  align-items: center;
+}
+
+.show {
+  display: flex;
+}
+
+.hide {
+  display: none;
+}
+
+.messagebox {
   background-color: whitesmoke;
-  grid-column: 1 / 2;
-  grid-row: 2 / -2;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+
+  border-radius: 5px;
+  padding: 20px 15px 10px;
+}
+
+.messagebox span {
+  position: absolute;
+  top: 0;
+  right: 5px;
+  cursor: pointer;
+}
+
+.messagebox div:last-child {
+  justify-content: flex-end;
+}
+
+.messagebox form > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+
+  margin: 5px;
 }
 
 .main {
   background-color: white;
   grid-column: 2 / -1;
   grid-row: 2 / -2;
+}
+
+.addBookContainer {
+  background-color: var(--main-theme);
+  color: white;
+  padding: 10px;
+  width: 150px;
+  border-radius: 10px 0 0 0;
+
+  position: fixed;
+  bottom: 50px;
+  right: 0;
+  text-align: center;
+  cursor: pointer;
+}
+
+.addBookContainer:hover {
+  background-color: var(--secondary);
+  color: var(--accent);
 }
 
 .footer {
