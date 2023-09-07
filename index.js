@@ -52,6 +52,7 @@ function clearFieldsFromAddBookForm(){
 
 function createBookInDom(newBookName, newBookAuthor, newBookReadStatus){
   const bookDiv = document.createElement('div');
+  bookDiv.dataset.bookName = newBookName;
   bookDiv.classList.add('book');
 
   const bookDetails = document.createElement('div');
@@ -102,6 +103,10 @@ function createBookInDom(newBookName, newBookAuthor, newBookReadStatus){
   bookRemoveDiv.appendChild(removeBookButton);
 
   booksContainer.appendChild(bookDiv);
+
+  completedStatusCheckbox.addEventListener('click', function(){
+    const bookName = this.parentElement.parentElement.parentElement;
+  });
 }
 
 addBookButton.addEventListener('click', ()=> {
