@@ -144,3 +144,54 @@ input, textarea, button, select {
   align-items: center;
 }
 
+.books-container {
+  margin: 25px;
+
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 300px);
+  gap: 10px;
+  padding: 10px;
+}
+
+.book {
+  background-color: var(--main-theme);
+  color: white;
+  padding: 10px;
+  border-radius: 5px;
+  line-height: 1.8;
+  letter-spacing: 0.3px;
+}
+
+.book-functions {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.book-read-status {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.book-remove {
+  display: flex;
+  justify-content: center;
+}
+
+input {
+  cursor: pointer;
+}
+
+input[type=button] {
+  background-color: white;
+  color: var(--accent);
+  border-radius: 5px;
+  padding: 1px 8px;
+  margin-top: 15px;
+}
+
+input[type=button]:hover {
+  background-color: var(--accent);
+  color: white;
+}
