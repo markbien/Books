@@ -64,7 +64,6 @@ input, textarea, button, select {
   width: 100%;
 
   display: none;
-  /* display: flex; */
   justify-content: center;
   align-items: center;
 }
@@ -84,7 +83,7 @@ input, textarea, button, select {
   flex-direction: column;
   justify-content: center;
   position: relative;
-
+  
   border-radius: 5px;
   padding: 20px 15px 10px;
 }
@@ -105,7 +104,8 @@ input, textarea, button, select {
   justify-content: space-between;
   gap: 15px;
 
-  margin: 5px;
+  margin: 10px 5px;
+  letter-spacing: 0.5px;
 }
 
 .main {
@@ -121,7 +121,7 @@ input, textarea, button, select {
   width: 150px;
   border-radius: 10px 0 0 0;
 
-  position: fixed;
+  position: absolute;
   bottom: 50px;
   right: 0;
   text-align: center;
