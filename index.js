@@ -25,6 +25,14 @@ const bookContainer = {
     this.container.push(book);
     createBookInDom(book.name, book.author, book.hasBeenRead);
   },
+  toggleBookReadStatusInContainer: function(bookName) {
+    const bookExists = this.container.find(book => {
+      if (book.name === bookName) {
+        book.toggleReadStatus();
+        return;
+      }
+    });
+  },
 }
 
 window.onload = function(){
@@ -105,7 +113,10 @@ function createBookInDom(newBookName, newBookAuthor, newBookReadStatus){
   booksContainer.appendChild(bookDiv);
 
   completedStatusCheckbox.addEventListener('click', function(){
-    const bookName = this.parentElement.parentElement.parentElement;
+    const currentBook = this.parentElement.parentElement.parentElement;
+    const bookName = currentBook.dataset.bookName;
+
+    bookContainer.toggleBookReadStatusInContainer(bookName);
   });
 }
 
@@ -124,4 +135,3 @@ addToListButton.addEventListener('click', function(e){
   clearFieldsFromAddBookForm();
   toggleMessageBoxAndAddBookButton();
 });
-
