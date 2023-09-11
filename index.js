@@ -34,18 +34,14 @@ const bookContainer = {
     });
   },
   removeBookInContainer: function(bookName){
+    // If the current book object is not bookName, add it in the container object
     this.container = this.container.filter(book =>{
       return book.name !== bookName;
     });
     
+    // Remove the book from the DOM
     let child = document.querySelector(`[data-book-name="${bookName}"]`);
     child.parentElement.removeChild(child);
-  },
-  loadDataToContainer: function(){
-    booksContainer.textContent = '';
-    for (let i = 0; i < this.container.length; i++){
-      createBookInDom(this.container[i].name, this.container[i].author, this.container[i].hasBeenRead);
-    }
   },
 }
 
@@ -148,8 +144,6 @@ addBookButton.addEventListener('click', ()=> {
 messageBoxCloseButton.addEventListener('click', ()=>{
   toggleMessageBoxAndAddBookButton();
 });
-
-
 
 addToListButton.addEventListener('click', function(e){
   e.preventDefault();
