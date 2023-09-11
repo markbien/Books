@@ -37,7 +37,9 @@ const bookContainer = {
     this.container = this.container.filter(book =>{
       return book.name !== bookName;
     });
-    this.loadDataToContainer();
+    
+    let child = document.querySelector(`[data-book-name="${bookName}"]`);
+    child.parentElement.removeChild(child);
   },
   loadDataToContainer: function(){
     booksContainer.textContent = '';
