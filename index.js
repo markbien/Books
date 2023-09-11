@@ -33,6 +33,18 @@ const bookContainer = {
       }
     });
   },
+  removeBookInContainer: function(bookName){
+    this.container = this.container.filter(book =>{
+      return book.name !== bookName;
+    });
+    this.loadDataToContainer();
+  },
+  loadDataToContainer: function(){
+    booksContainer.textContent = '';
+    for (let i = 0; i < this.container.length; i++){
+      createBookInDom(this.container[i].name, this.container[i].author, this.container[i].hasBeenRead);
+    }
+  },
 }
 
 window.onload = function(){
@@ -117,6 +129,13 @@ function createBookInDom(newBookName, newBookAuthor, newBookReadStatus){
     const bookName = currentBook.dataset.bookName;
 
     bookContainer.toggleBookReadStatusInContainer(bookName);
+  });
+
+  removeBookButton.addEventListener('click', function(){
+    const currentBook = this.parentElement.parentElement.parentElement;
+    const bookName = currentBook.dataset.bookName;
+
+    bookContainer.removeBookInContainer(bookName);
   });
 }
 
