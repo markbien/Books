@@ -1,1 +1,0 @@
-This is an existing project that I created last year. Now, I'm re-learning the fundamentals and re-creating this project to reinforce my learning.
