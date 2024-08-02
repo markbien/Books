@@ -32,7 +32,7 @@
         display: flex;
         justify-content: center;
         font-family: "Roboto", sans-serif;
-        background-image: url(vecteezy_old-books-on-a-wooden-table-book-stack-in-the-library-room_5930374.JPG);
+        background-image: url(library.jpg);
         background-size: cover;
         background-position: center;
         background-attachment: fixed;
@@ -44,7 +44,7 @@
         margin: 3% 3% 0;
         padding: 25px 3%;
         width: 80%;
-        height: 95%;
+        overflow: auto;
       }
 
       .greeting {
@@ -74,6 +74,7 @@
 
       .book > * {
         padding: 5px;
+        margin-bottom: 8px;
       }
 
       .book-title {
@@ -85,6 +86,28 @@
       .author,
       .pages {
         color: #0000008a;
+      }
+
+      fieldset {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        gap: 10px;
+      }
+
+      fieldset > legend {
+        font-size: .8rem;
+        text-transform: uppercase;
+      }
+
+      fieldset button {
+        font-size: 1rem;
+        padding: 3px 5px;
+      }
+
+      .options,
+      fieldset button {
+        cursor: pointer;
       }
 
       footer {
@@ -104,9 +127,10 @@
 
       @media screen and (max-width: 600px) {
         section {
-          margin: 10px;
-          padding: 10px 5px;
+          padding: 10px 5px 70px;
           width: 100%;
+          height: auto;
+          min-height: 100vh;
         }
         .book-container {
           grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -125,97 +149,19 @@
           <!-- Author -->
           <div class="pages">1000 pages</div>
           <!-- # of Pages -->
-          <div class="book-options">
+          
+          <fieldset>
+            <legend>Settings</legend>
             <div class="read-status-container">
               <label for="read-status">Status</label>
-              <select name="read-status" id="read-status">
+              <select name="read-status" id="read-status" class="options">
                 <option value="ongoing">Ongoing</option>
                 <option value="finished">Finished</option>
                 <option value="abandoned">Abandoned</option>
               </select>
             </div>
-            <button id="remove-book">Remove from list</button>
-          </div>
-        </div>
-
-        <div class="book">
-          <h3 class="book-title">Harry Potter and the Sorcerer's Stone</h3>
-          <!-- Title -->
-          <h4 class="author">J.K. Rowlins</h4>
-          <!-- Author -->
-          <div class="pages">1000 pages</div>
-          <!-- # of Pages -->
-          <div class="book-options">
-            <div class="read-status-container">
-              <label for="read-status">Status</label>
-              <select name="read-status" id="read-status">
-                <option value="ongoing">Ongoing</option>
-                <option value="finished">Finished</option>
-                <option value="abandoned">Abandoned</option>
-              </select>
-            </div>
-            <button id="remove-book">Remove from list</button>
-          </div>
-        </div>
-
-        <div class="book">
-          <h3 class="book-title">Harry Potter and the Sorcerer's Stone</h3>
-          <!-- Title -->
-          <h4 class="author">J.K. Rowlins</h4>
-          <!-- Author -->
-          <div class="pages">1000 pages</div>
-          <!-- # of Pages -->
-          <div class="book-options">
-            <div class="read-status-container">
-              <label for="read-status">Status</label>
-              <select name="read-status" id="read-status">
-                <option value="ongoing">Ongoing</option>
-                <option value="finished">Finished</option>
-                <option value="abandoned">Abandoned</option>
-              </select>
-            </div>
-            <button id="remove-book">Remove from list</button>
-          </div>
-        </div>
-
-        <div class="book">
-          <h3 class="book-title">Harry Potter and the Sorcerer's Stone</h3>
-          <!-- Title -->
-          <h4 class="author">J.K. Rowlins</h4>
-          <!-- Author -->
-          <div class="pages">1000 pages</div>
-          <!-- # of Pages -->
-          <div class="book-options">
-            <div class="read-status-container">
-              <label for="read-status">Status</label>
-              <select name="read-status" id="read-status">
-                <option value="ongoing">Ongoing</option>
-                <option value="finished">Finished</option>
-                <option value="abandoned">Abandoned</option>
-              </select>
-            </div>
-            <button id="remove-book">Remove from list</button>
-          </div>
-        </div>
-
-        <div class="book">
-          <h3 class="book-title">Harry Potter and the Sorcerer's Stone</h3>
-          <!-- Title -->
-          <h4 class="author">J.K. Rowlins</h4>
-          <!-- Author -->
-          <div class="pages">1000 pages</div>
-          <!-- # of Pages -->
-          <div class="book-options">
-            <div class="read-status-container">
-              <label for="read-status">Status</label>
-              <select name="read-status" id="read-status">
-                <option value="ongoing">Ongoing</option>
-                <option value="finished">Finished</option>
-                <option value="abandoned">Abandoned</option>
-              </select>
-            </div>
-            <button id="remove-book">Remove from list</button>
-          </div>
+            <button id="remove-book">Delete</button>
+          </fieldset>
         </div>
       </div>
     </section>
