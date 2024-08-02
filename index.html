@@ -155,12 +155,13 @@
             <div class="read-status-container">
               <label for="read-status">Status</label>
               <select name="read-status" id="read-status" class="options">
+                <option value="pending">Pending</option>
                 <option value="ongoing">Ongoing</option>
                 <option value="finished">Finished</option>
                 <option value="abandoned">Abandoned</option>
               </select>
             </div>
-            <button id="remove-book">Delete</button>
+            <button>Delete</button>
           </fieldset>
         </div>
       </div>
@@ -170,5 +171,33 @@
         >Library Background Stock photos by Vecteezy</a
       >
     </footer>
+
+    <script>
+      const bookContainer = document.querySelector('.book-container');
+
+      function Book(name, author, pages) {
+        this.name = name;
+        this.author = author;
+        this.pages = pages;
+        this.readStatus = "Pending";          
+      }
+
+      Book.prototype.changeReadStatus = function(newStatus){
+        switch (newStatus) {
+            case "Ongoing":
+            case "Pending":
+            case "Finished":
+            case "Abandoned":
+              this.readStatus = newStatus;
+              break;
+            default:
+              return;
+          }
+      }
+
+      const harryPotter = new Book("Harry Potter and the Sorcerer's Stone", "J.K. Rowlins", 1000);
+      console.table(harryPotter);
+      
+    </script>
   </body>
 </html>
