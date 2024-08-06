@@ -65,6 +65,10 @@ const bookshelf = {
 
     const btn = document.createElement("button");
     btn.textContent = "Delete";
+    btn.addEventListener('click', ()=> {
+      const currId = book.getAttribute('id');
+      this.removeBook(currId);
+    });
 
     selectReadStatus.appendChild(pending);
     selectReadStatus.appendChild(ongoing);
@@ -118,19 +122,6 @@ Book.prototype.changeReadStatus = function (newStatus) {
       return;
   }
 };
-
-// const harryPotter = new Book(
-//   "Harry Potter and the Sorcerer's Stone",
-//   "J.K. Rowlins",
-//   1000
-// );
-// const bible = new Book("The Bible", "Unknown", 1500);
-// const random = new Book("Random", "Rand", 1000);
-
-// bookshelf.addBookToShelf(harryPotter);
-// bookshelf.addBookToShelf(bible);
-
-// bookshelf.populateBooksInContainer();
 
 bookshelf.addBookToShelf(
   "Harry Potter and the Sorcerer's Stone",
