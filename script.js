@@ -66,14 +66,18 @@ const bookshelf = {
     const btn = document.createElement("button");
     btn.textContent = "Delete";
     btn.addEventListener('click', ()=> {
-      const currId = book.getAttribute('id');
-      this.removeBook(currId);
+      this.removeBook(id);
     });
 
     selectReadStatus.appendChild(pending);
     selectReadStatus.appendChild(ongoing);
     selectReadStatus.appendChild(finished);
     selectReadStatus.appendChild(abandoned);
+    selectReadStatus.addEventListener('change', ()=> {
+      let status = selectReadStatus.value;
+      status = `${status.charAt(0).toUpperCase()}${status.slice(1, status.length)}`;
+      this.container[id].changeReadStatus(status);
+    });
 
     fieldset.appendChild(legend);
     fieldset.appendChild(readStatusContainer);
