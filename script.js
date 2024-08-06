@@ -5,8 +5,9 @@ const bookshelf = {
   isBookInContainer(book) {
     return this.container.findIndex((item) => item.name === book.name);
   },
-  addBookToShelf(book) {
-    this.container.push(book);
+  addBookToShelf(title, author, pages) {
+    const newBook = new Book(title, author, pages);
+    this.container.push(newBook);
     this.populateBooksInContainer();
   },
   clearContainerDiv() {
@@ -118,15 +119,27 @@ Book.prototype.changeReadStatus = function (newStatus) {
   }
 };
 
-const harryPotter = new Book(
+// const harryPotter = new Book(
+//   "Harry Potter and the Sorcerer's Stone",
+//   "J.K. Rowlins",
+//   1000
+// );
+// const bible = new Book("The Bible", "Unknown", 1500);
+// const random = new Book("Random", "Rand", 1000);
+
+// bookshelf.addBookToShelf(harryPotter);
+// bookshelf.addBookToShelf(bible);
+
+// bookshelf.populateBooksInContainer();
+
+bookshelf.addBookToShelf(
   "Harry Potter and the Sorcerer's Stone",
   "J.K. Rowlins",
-  1000
+  1000,
 );
-const bible = new Book("The Bible", "Unknown", 1500);
-const random = new Book("Random", "Rand", 1000);
 
-bookshelf.addBookToShelf(harryPotter);
-bookshelf.addBookToShelf(bible);
-
-bookshelf.populateBooksInContainer();
+bookshelf.addBookToShelf(
+  "The Bible",
+  "Unknown",
+  1500,
+);
