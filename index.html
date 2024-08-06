@@ -110,6 +110,12 @@
         cursor: pointer;
       }
 
+      /* .read-status-container {
+        display: flex;
+        gap: 5px;
+        overflow: auto;
+      } */
+
       footer {
         position: fixed;
         bottom: 0;
@@ -135,6 +141,10 @@
         .book-container {
           grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
         }
+        .read-status-container {
+          display: flex;
+          gap: 10px;
+        }
       }
     </style>
   </head>
@@ -142,19 +152,16 @@
     <section>
       <div class="greeting">Welcome! Here's the list of your books:</div>
       <div class="book-container">
-        <div class="book">
+        <!-- <div class="book">
           <h3 class="book-title">Harry Potter and the Sorcerer's Stone</h3>
-          <!-- Title -->
           <h4 class="author">J.K. Rowlins</h4>
-          <!-- Author -->
           <div class="pages">1000 pages</div>
-          <!-- # of Pages -->
           
           <fieldset>
             <legend>Settings</legend>
             <div class="read-status-container">
-              <label for="read-status">Status</label>
-              <select name="read-status" id="read-status" class="options">
+              <label>Status</label>
+              <select name="read-status" class="options">
                 <option value="pending">Pending</option>
                 <option value="ongoing">Ongoing</option>
                 <option value="finished">Finished</option>
@@ -163,7 +170,7 @@
             </div>
             <button>Delete</button>
           </fieldset>
-        </div>
+        </div> -->
       </div>
     </section>
     <footer>
