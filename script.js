@@ -169,3 +169,8 @@ addBookToContainerBtn.addEventListener('click', ()=> {
   bookshelf.addBookToShelf(title.value, author.value, pages.value);
   toggleMessageBoxAndAddButton();
 });
+
+// TODOs
+// 1. User can open the blurredMessageBox by clicking at the blank space in the upper middle part of the page
+// 2. Allow to save the books in the browser so it will not delete the books
+// 3. If there's no book in the list, show a message e.g. "There's no book in your list at the moment"
