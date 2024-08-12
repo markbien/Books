@@ -127,14 +127,20 @@ Book.prototype.changeReadStatus = function (newStatus) {
   }
 };
 
-bookshelf.addBookToShelf(
-  "Harry Potter and the Sorcerer's Stone",
-  "J.K. Rowlins",
-  1000,
-);
+// bookshelf.addBookToShelf(
+//   "Harry Potter and the Sorcerer's Stone",
+//   "J.K. Rowlins",
+//   1000,
+// );
 
-bookshelf.addBookToShelf(
-  "The Bible",
-  "Unknown",
-  1500,
-);
+for (let i = 0; i < 15; i++) {
+  bookshelf.addBookToShelf(`${i}`, 'J.K. Rowlins', 1000);
+}
+
+// Add transition to turn the add button 45deg so it will appear as X button
+const addBtn = document.querySelector('#add');
+addBtn.addEventListener('click', ()=> {
+  addBtn.classList.toggle('rotate');
+  const blurredMessageBox = document.querySelector('.blurredMessageBox');
+  blurredMessageBox.classList.toggle('show');
+});

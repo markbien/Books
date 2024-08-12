@@ -36,6 +36,7 @@
         background-size: cover;
         background-position: center;
         background-attachment: fixed;
+        position: relative;
       }
 
       section {
@@ -45,7 +46,6 @@
         padding: 25px 50px 5%;
         width: 80%;
         overflow: auto;
-        position: relative;
       }
 
       .greeting {
@@ -57,20 +57,17 @@
 
       #add {
         position: absolute;
-        top: 10px;
+        bottom: 40px;
         right: 10px;
-        height: 32px;
+        height: 64px;
         width: auto;
         cursor: pointer;
-        transition: all .15s ease;
+        transition: all 0.5s ease;
+        z-index: 1;
       }
 
-      #add:hover {
-        transform: scale(1.1);
-      }
-
-      #add:active {
-        transform: scale(1);
+      .rotate {
+        transform: rotate(135deg);
       }
 
       .book-container {
@@ -119,7 +116,7 @@
       }
 
       fieldset > legend {
-        font-size: .8rem;
+        font-size: 0.8rem;
         text-transform: uppercase;
       }
 
@@ -148,6 +145,51 @@
         text-decoration: none;
       }
 
+      .blurredMessageBox {
+        height: 0;
+        width: 0;
+        position: absolute;
+        transition: all 0.3s ease;
+      }
+
+      .blurredMessageBox.show {
+        background-color: rgba(0, 0, 0, 0.8);
+        /* position: absolute; */
+        height: 100%;
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+
+      .blurredMessageBox > .messageBox {
+        opacity: 0;
+      }
+
+      .blurredMessageBox.show > .messageBox {
+        opacity: 1;
+        height: 220px;
+        width: 400px;
+        padding: 25px;
+        background-color: white;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        border-radius: 10px;
+        transition: all 0.5s ease;
+      }
+
+      .messageBox > input {
+        padding: 5px;
+        font-size: 1.1rem;
+      }
+
+      .messageBox > button {
+        padding: 5px;
+        font-size: 1.1rem;
+        cursor: pointer;
+      }
+
       @media screen and (max-width: 600px) {
         section {
           padding: 10px 5px 70px;
@@ -156,12 +198,18 @@
           min-height: 100vh;
         }
         .book-container {
-          margin-top: 20px;
+          margin-top: 50px;
           grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
         }
         .read-status-container {
           display: flex;
           gap: 10px;
+        }
+
+        #add {
+          bottom: 34px;
+          right: 15px;
+          height: 40px;
         }
       }
     </style>
@@ -190,8 +238,27 @@
           </fieldset>
         </div> -->
       </div>
-      <img src="plus.png" id="add" alt="An image of an add button">
     </section>
+    <img src="plus.png" id="add" alt="An image of an add button" />
+    <span class="blurredMessageBox">
+      <div class="messageBox">
+        <input type="text" name="title" id="title" placeholder="Book Title" />
+        <input
+          type="text"
+          name="author"
+          id="author"
+          placeholder="Book Author"
+        />
+        <input
+          type="number"
+          name="pages"
+          id="pages"
+          min="0"
+          placeholder="Number of pages"
+        />
+        <button id="AddBtn">Add Book</button>
+      </div>
+    </span>
     <footer>
       <a href="https://www.vecteezy.com/free-photos/library-background"
         >Library Background Stock photos by Vecteezy</a
