@@ -83,8 +83,12 @@ const bookshelf = {
     selectReadStatus.addEventListener('change', ()=> {
       let status = selectReadStatus.value;
       status = `${status.charAt(0).toUpperCase()}${status.slice(1, status.length)}`;
+
       this.container[id].changeReadStatus(status);
+      saveCurrentStateToBrowser();
     });
+    
+    selectReadStatus.value = bookObj.readStatus.toLowerCase();
 
     fieldset.appendChild(legend);
     fieldset.appendChild(readStatusContainer);
@@ -114,11 +118,11 @@ const bookshelf = {
   },
 };
 
-function Book(name, author, pages) {
+function Book(name, author, pages, readStatus = "Pending") {
   this.name = name;
   this.author = author;
   this.pages = pages;
-  this.readStatus = "Pending";
+  this.readStatus = readStatus;
 }
 
 Book.prototype.changeReadStatus = function (newStatus) {
@@ -173,7 +177,8 @@ function saveCurrentStateToBrowser(){
 }
 
 function getCurrentStateFromBrowser(){
-  return JSON.parse(localStorage.getItem("bookShelf"));
+  const localStorageBookShelf = JSON.parse(localStorage.getItem("bookShelf"));
+  return localStorageBookShelf.map(book => new Book(book.name, book.author, book.pages, book.readStatus));
 }
 
 function initializePage(){
@@ -184,6 +189,4 @@ function initializePage(){
 initializePage();
 
 // TODOs
-// 2. Allow to save the books in the browser so it will not delete the books
 // 3. If there's no book in the list, show a message e.g. "There's no book in your list at the moment"
-// 4. Fix the changeStatus function
