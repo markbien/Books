@@ -192,6 +192,21 @@
         cursor: pointer;
       }
 
+      .no-books-in-list {
+        background-color: white;
+        border-radius: 10px;
+        padding: 15px 10px;
+        position: absolute;
+        top: 25%;
+        transform: translateX(-50%, -50%);
+        text-align: center;
+        display: none;
+      }
+
+      .no-books-in-list.show {
+        display: block;
+      }
+
       @media screen and (max-width: 600px) {
         section {
           padding: 10px 5px 70px;
@@ -241,6 +256,7 @@
         </div> -->
       </div>
     </section>
+    <div class="no-books-in-list">There are no books at the moment!</div>
     <img src="plus.png" id="add" alt="An image of an add button" />
     <span class="blurredMessageBox">
       <div class="messageBox">

@@ -110,7 +110,15 @@ const bookshelf = {
     this.container.forEach(book => {
       // Add book to innerHTML
       bookContainer.appendChild(this.createBook(book));      
-    });    
+    });
+
+    const noItemsMessageBox = document.querySelector('.no-books-in-list');
+    if (this.container.length === 0) {
+      noItemsMessageBox.classList.add('show');
+    } 
+    else {
+      noItemsMessageBox.classList.remove('show');
+    }
   },
   removeBook(bookId) {
     this.container.splice(bookId, 1);
@@ -182,12 +190,13 @@ function getCurrentStateFromBrowser(){
   return localStorageBookShelf.map(book => new Book(book.name, book.author, book.pages, book.readStatus));
 }
 
+function showMessageNoBooksInList(){
+  
+}
+
 function initializePage(){
   bookshelf.loadItemsFromLocalStorage();
   bookshelf.populateBooksInContainer();
 }
 
 initializePage();
-
-// TODOs
-// 3. If there's no book in the list, show a message e.g. "There's no book in your list at the moment"
