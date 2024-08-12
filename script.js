@@ -2,8 +2,8 @@ const bookContainer = document.querySelector(".book-container");
 
 const bookshelf = {
   container: [],
-  isBookInContainer(book) {
-    return this.container.findIndex((item) => item.name === book.name);
+  isBookInContainer(bookName) {
+    return this.container.findIndex((item) => item.name === bookName);
   },
   addBookToShelf(title, author, pages) {
     const newBook = new Book(title, author, pages);
@@ -16,7 +16,7 @@ const bookshelf = {
   createBook(bookObj) {
     const book = document.createElement("div");
     book.classList.add("book");
-    const id = this.isBookInContainer(bookObj);
+    const id = this.isBookInContainer(bookObj.name);
     book.setAttribute('id', id);
 
     const bookTitle = document.createElement("h3");
@@ -141,18 +141,31 @@ for (let i = 0; i < 15; i++) {
 const addBtn = document.querySelector('#add');
 const blurredMessageBox = document.querySelector('.blurredMessageBox');
 addBtn.addEventListener('click', ()=> {
-  addBtn.classList.toggle('rotate');
-  blurredMessageBox.classList.toggle('show');
-
-  clearTextBoxesFromMessageBox();
+  toggleMessageBoxAndAddButton();
 });
 
-function clearTextBoxesFromMessageBox(){
-  const title = document.querySelector('#title');
-  const author = document.querySelector('#author');
-  const pages = document.querySelector('#pages');
+function toggleMessageBoxAndAddButton(){
+  addBtn.classList.toggle('rotate');
+  blurredMessageBox.classList.toggle('show');
+  clearTextBoxesFromMessageBox();
+}
 
+const title = document.querySelector('#title');
+const author = document.querySelector('#author');
+const pages = document.querySelector('#pages');
+
+function clearTextBoxesFromMessageBox(){
   title.value = '';
   author.value = '';
   pages.value = '';
 }
+
+const addBookToContainerBtn = document.querySelector('#addBtn');
+addBookToContainerBtn.addEventListener('click', ()=> {
+  if (bookshelf.isBookInContainer(title.value) !== -1) {
+    alert("This book already exists in the list!");
+    return;
+  }
+  bookshelf.addBookToShelf(title.value, author.value, pages.value);
+  toggleMessageBoxAndAddButton();
+});
