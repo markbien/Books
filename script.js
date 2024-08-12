@@ -139,8 +139,20 @@ for (let i = 0; i < 15; i++) {
 
 // Add transition to turn the add button 45deg so it will appear as X button
 const addBtn = document.querySelector('#add');
+const blurredMessageBox = document.querySelector('.blurredMessageBox');
 addBtn.addEventListener('click', ()=> {
   addBtn.classList.toggle('rotate');
-  const blurredMessageBox = document.querySelector('.blurredMessageBox');
   blurredMessageBox.classList.toggle('show');
+
+  clearTextBoxesFromMessageBox();
 });
+
+function clearTextBoxesFromMessageBox(){
+  const title = document.querySelector('#title');
+  const author = document.querySelector('#author');
+  const pages = document.querySelector('#pages');
+
+  title.value = '';
+  author.value = '';
+  pages.value = '';
+}
