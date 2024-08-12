@@ -177,7 +177,8 @@ function saveCurrentStateToBrowser(){
 }
 
 function getCurrentStateFromBrowser(){
-  const localStorageBookShelf = JSON.parse(localStorage.getItem("bookShelf"));
+  // If bookShelf can't be found in localStorage then assign empty array
+  const localStorageBookShelf = JSON.parse(localStorage.getItem("bookShelf")) || [];
   return localStorageBookShelf.map(book => new Book(book.name, book.author, book.pages, book.readStatus));
 }
 
