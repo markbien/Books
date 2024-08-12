@@ -5,6 +5,12 @@ const bookshelf = {
   isBookInContainer(bookName) {
     return this.container.findIndex((item) => item.name === bookName);
   },
+  clearContainer(){
+    this.container = [];
+  },
+  loadItemsFromLocalStorage(){
+    this.container = getCurrentStateFromBrowser().slice();
+  },
   addBookToShelf(title, author, pages) {
     const newBook = new Book(title, author, pages);
     this.container.push(newBook);
@@ -67,6 +73,7 @@ const bookshelf = {
     btn.textContent = "Delete";
     btn.addEventListener('click', ()=> {
       this.removeBook(id);
+      saveCurrentStateToBrowser();
     });
 
     selectReadStatus.appendChild(pending);
@@ -127,16 +134,6 @@ Book.prototype.changeReadStatus = function (newStatus) {
   }
 };
 
-// bookshelf.addBookToShelf(
-//   "Harry Potter and the Sorcerer's Stone",
-//   "J.K. Rowlins",
-//   1000,
-// );
-
-for (let i = 0; i < 15; i++) {
-  bookshelf.addBookToShelf(`${i}`, 'J.K. Rowlins', 1000);
-}
-
 // Add transition to turn the add button 45deg so it will appear as X button
 const addBtn = document.querySelector('#add');
 const blurredMessageBox = document.querySelector('.blurredMessageBox');
@@ -168,9 +165,25 @@ addBookToContainerBtn.addEventListener('click', ()=> {
   }
   bookshelf.addBookToShelf(title.value, author.value, pages.value);
   toggleMessageBoxAndAddButton();
+  saveCurrentStateToBrowser();
 });
 
+function saveCurrentStateToBrowser(){
+  localStorage.setItem("bookShelf", JSON.stringify(bookshelf.container));
+}
+
+function getCurrentStateFromBrowser(){
+  return JSON.parse(localStorage.getItem("bookShelf"));
+}
+
+function initializePage(){
+  bookshelf.loadItemsFromLocalStorage();
+  bookshelf.populateBooksInContainer();
+}
+
+initializePage();
+
 // TODOs
-// 1. User can open the blurredMessageBox by clicking at the blank space in the upper middle part of the page
 // 2. Allow to save the books in the browser so it will not delete the books
 // 3. If there's no book in the list, show a message e.g. "There's no book in your list at the moment"
+// 4. Fix the changeStatus function
