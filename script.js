@@ -190,10 +190,6 @@ function getCurrentStateFromBrowser(){
   return localStorageBookShelf.map(book => new Book(book.name, book.author, book.pages, book.readStatus));
 }
 
-function showMessageNoBooksInList(){
-  
-}
-
 function initializePage(){
   bookshelf.loadItemsFromLocalStorage();
   bookshelf.populateBooksInContainer();
