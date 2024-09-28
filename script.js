@@ -1,29 +1,87 @@
-const bookContainer = document.querySelector(".book-container");
+"use strict";
 
-const bookshelf = {
-  container: [],
-  isBookInContainer(bookName) {
-    return this.container.findIndex((item) => item.name === bookName);
-  },
-  clearContainer(){
-    this.container = [];
-  },
-  loadItemsFromLocalStorage(){
-    this.container = getCurrentStateFromBrowser().slice();
-  },
-  addBookToShelf(title, author, pages) {
-    const newBook = new Book(title, author, pages);
-    this.container.push(newBook);
-    this.populateBooksInContainer();
-  },
-  clearContainerDiv() {
-    bookContainer.innerHTML = "";
-  },
-  createBook(bookObj) {
+const bookShelf = (() => {
+  let container;
+
+  const checkItemsInContainer = () => {
+    return container;
+  };
+
+  const returnBookObj = (index) => {
+    return container[index];
+  };
+
+  const getBookIndex = (bookName) =>
+    container.findIndex((item) => item.name === bookName);
+
+  const clearContainer = () => (container = []);
+
+  const addBookToShelf = (title, author, pages, readStatus) => {
+    const newBook = new Book(title, author, pages, readStatus);
+    container.push(newBook);
+  };
+
+  const removeBook = (bookName) => {
+    const index = getBookIndex(bookName);
+    container.splice(index, 1);
+  };
+
+  const saveCurrentStateToBrowser = () => {
+    const newArr = [];
+    container.forEach(book =>{ 
+      newArr.push(book.toJSON()); // Get the public properties
+    });
+    localStorage.setItem("bookShelf", JSON.stringify(newArr));
+  };
+
+  function getCurrentStateFromBrowser() {
+    // If bookShelf can't be found in localStorage then assign empty array
+    const localStorageBookShelf =
+      JSON.parse(localStorage.getItem("bookShelf")) || [];
+    return localStorageBookShelf.map(
+      (book) => new Book(book.name, book.author, book.pages, book.readStatus)
+    );
+  }
+
+  const init = () => {
+    container = getCurrentStateFromBrowser();
+    domHandler.populateBooksFromContainerToDiv(container);
+  };
+
+  return {
+    init,
+    clearContainer,
+    addBookToShelf,
+    removeBook,
+    checkItemsInContainer,
+    getBookIndex,
+    returnBookObj,
+    saveCurrentStateToBrowser,
+    getCurrentStateFromBrowser,
+  };
+})();
+
+const domHandler = (() => {
+  const bookContainer = document.querySelector(".book-container");
+  const clearContainerDiv = () => (bookContainer.innerHTML = "");
+
+  const populateBooksFromContainerToDiv = (container) => {
+    clearContainerDiv();
+    container.forEach((book) => {
+      bookContainer.appendChild(createBook(book));
+    });
+
+    const noItemsMessageBox = document.querySelector(".no-books-in-list");
+    if (bookShelf.checkItemsInContainer().length === 0) {
+      noItemsMessageBox.classList.add("show");
+    } else {
+      noItemsMessageBox.classList.remove("show");
+    }
+  };
+
+  const createBook = (bookObj) => {
     const book = document.createElement("div");
     book.classList.add("book");
-    const id = this.isBookInContainer(bookObj.name);
-    book.setAttribute('id', id);
 
     const bookTitle = document.createElement("h3");
     bookTitle.classList.add("book-title");
@@ -71,23 +129,28 @@ const bookshelf = {
 
     const btn = document.createElement("button");
     btn.textContent = "Delete";
-    btn.addEventListener('click', ()=> {
-      this.removeBook(id);
-      saveCurrentStateToBrowser();
+    btn.addEventListener("click", () => {
+      bookShelf.removeBook(bookObj.name);
+      populateBooksFromContainerToDiv(bookShelf.checkItemsInContainer());
+      bookShelf.saveCurrentStateToBrowser();
     });
 
     selectReadStatus.appendChild(pending);
     selectReadStatus.appendChild(ongoing);
     selectReadStatus.appendChild(finished);
     selectReadStatus.appendChild(abandoned);
-    selectReadStatus.addEventListener('change', ()=> {
+    selectReadStatus.addEventListener("change", () => {
       let status = selectReadStatus.value;
-      status = `${status.charAt(0).toUpperCase()}${status.slice(1, status.length)}`;
+      status = `${status.charAt(0).toUpperCase()}${status.slice(
+        1,
+        status.length
+      )}`;
 
-      this.container[id].changeReadStatus(status);
-      saveCurrentStateToBrowser();
+      const bookIndex = bookShelf.getBookIndex(bookObj.name);
+      bookShelf.returnBookObj(bookIndex).changeReadStatus(status);
+      bookShelf.saveCurrentStateToBrowser();
     });
-    
+
     selectReadStatus.value = bookObj.readStatus.toLowerCase();
 
     fieldset.appendChild(legend);
@@ -103,96 +166,100 @@ const bookshelf = {
     book.appendChild(fieldset);
 
     return book;
-  },
-  populateBooksInContainer() {
-    this.clearContainerDiv();
-    // For each book in container
-    this.container.forEach(book => {
-      // Add book to innerHTML
-      bookContainer.appendChild(this.createBook(book));      
-    });
+  };
 
-    const noItemsMessageBox = document.querySelector('.no-books-in-list');
-    if (this.container.length === 0) {
-      noItemsMessageBox.classList.add('show');
-    } 
-    else {
-      noItemsMessageBox.classList.remove('show');
-    }
-  },
-  removeBook(bookId) {
-    this.container.splice(bookId, 1);
-    this.populateBooksInContainer();
-  },
-};
+  // Add transition to turn the add button 45deg so it will appear as X button
+  const addBtn = document.querySelector("#add");
+  const blurredMessageBox = document.querySelector(".blurredMessageBox");
+  addBtn.addEventListener("click", () => {
+    toggleMessageBoxAndAddButton();
+  });
 
-function Book(name, author, pages, readStatus = "Pending") {
-  this.name = name;
-  this.author = author;
-  this.pages = pages;
-  this.readStatus = readStatus;
-}
+  function toggleMessageBoxAndAddButton() {
+    addBtn.classList.toggle("rotate");
+    blurredMessageBox.classList.toggle("show");
+    clearTextBoxesFromMessageBox();
+  }
 
-Book.prototype.changeReadStatus = function (newStatus) {
-  switch (newStatus) {
-    case "Ongoing":
-    case "Pending":
-    case "Finished":
-    case "Abandoned":
-      this.readStatus = newStatus;
-      break;
-    default:
+  const title = document.querySelector("#title");
+  const author = document.querySelector("#author");
+  const pages = document.querySelector("#pages");
+
+  function clearTextBoxesFromMessageBox() {
+    title.value = "";
+    author.value = "";
+    pages.value = "";
+  }
+
+  const addBookToContainerBtn = document.querySelector("#addBtn");
+  addBookToContainerBtn.addEventListener("click", () => {
+    if (bookShelf.getBookIndex(title.value) !== -1) {
+      alert("This book already exists in the list!");
       return;
+    }
+
+    bookShelf.addBookToShelf(title.value, author.value, pages.value);
+    toggleMessageBoxAndAddButton();
+    populateBooksFromContainerToDiv(bookShelf.checkItemsInContainer());
+    bookShelf.saveCurrentStateToBrowser();
+  });
+
+  return {
+    createBook,
+    clearContainerDiv,
+    populateBooksFromContainerToDiv,
+  };
+})();
+
+class Book {
+  #name;
+  #author;
+  #pages;
+  #readStatus;
+
+  constructor(name, author, pages, readStatus = "Pending") {
+    this.#name = name;
+    this.#author = author;
+    this.#pages = pages;
+    this.#readStatus = readStatus;
   }
-};
 
-// Add transition to turn the add button 45deg so it will appear as X button
-const addBtn = document.querySelector('#add');
-const blurredMessageBox = document.querySelector('.blurredMessageBox');
-addBtn.addEventListener('click', ()=> {
-  toggleMessageBoxAndAddButton();
-});
-
-function toggleMessageBoxAndAddButton(){
-  addBtn.classList.toggle('rotate');
-  blurredMessageBox.classList.toggle('show');
-  clearTextBoxesFromMessageBox();
-}
-
-const title = document.querySelector('#title');
-const author = document.querySelector('#author');
-const pages = document.querySelector('#pages');
-
-function clearTextBoxesFromMessageBox(){
-  title.value = '';
-  author.value = '';
-  pages.value = '';
-}
-
-const addBookToContainerBtn = document.querySelector('#addBtn');
-addBookToContainerBtn.addEventListener('click', ()=> {
-  if (bookshelf.isBookInContainer(title.value) !== -1) {
-    alert("This book already exists in the list!");
-    return;
+  get name() {
+    return this.#name;
   }
-  bookshelf.addBookToShelf(title.value, author.value, pages.value);
-  toggleMessageBoxAndAddButton();
-  saveCurrentStateToBrowser();
-});
 
-function saveCurrentStateToBrowser(){
-  localStorage.setItem("bookShelf", JSON.stringify(bookshelf.container));
+  get author() {
+    return this.#author;
+  }
+
+  get pages() {
+    return this.#pages;
+  }
+
+  get readStatus() {
+    return this.#readStatus;
+  }
+
+  toJSON() { // Required because JSON.stringify can't access private properties
+    return {
+      name: this.#name,
+      author: this.#author,
+      pages: this.#pages,
+      readStatus: this.#readStatus,
+    };
+  }
+
+  changeReadStatus(newStatus) {
+    switch (newStatus) {
+      case "Ongoing":
+      case "Pending":
+      case "Finished":
+      case "Abandoned":
+        this.#readStatus = newStatus;
+        break;
+      default:
+        return;
+    }
+  }
 }
-
-function getCurrentStateFromBrowser(){
-  // If bookShelf can't be found in localStorage then assign empty array
-  const localStorageBookShelf = JSON.parse(localStorage.getItem("bookShelf")) || [];
-  return localStorageBookShelf.map(book => new Book(book.name, book.author, book.pages, book.readStatus));
-}
-
-function initializePage(){
-  bookshelf.loadItemsFromLocalStorage();
-  bookshelf.populateBooksInContainer();
-}
-
-initializePage();
+bookShelf.init();
