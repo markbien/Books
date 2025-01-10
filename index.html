@@ -155,7 +155,6 @@
 
       .blurredMessageBox.show {
         background-color: rgba(0, 0, 0, 0.8);
-        /* position: absolute; */
         height: 100%;
         width: 100%;
         display: flex;
@@ -170,23 +169,29 @@
 
       .blurredMessageBox.show > .messageBox {
         opacity: 1;
-        height: 220px;
+        /* height: 220px; */
         width: 400px;
         padding: 25px;
         background-color: white;
         display: flex;
-        flex-direction: column;
-        justify-content: space-between;
         border-radius: 10px;
         transition: all 0.5s ease;
       }
 
-      .messageBox > input {
+      form {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 10px;
+      }
+
+      .messageBox input {
         padding: 5px;
         font-size: 1.1rem;
       }
 
-      .messageBox > button {
+      .messageBox button {
         padding: 5px;
         font-size: 1.1rem;
         cursor: pointer;
@@ -205,6 +210,18 @@
 
       .no-books-in-list.show {
         display: block;
+      }
+
+      .error {
+        background-color: rgba(255, 1, 1, 0.874);
+        color: white;
+        padding: 10px;
+        opacity: 0;
+        transition: .3s ease all;
+      }
+
+      .error.show {
+        opacity: 1;
       }
 
       @media screen and (max-width: 600px) {
@@ -258,23 +275,30 @@
     </section>
     <div class="no-books-in-list">There are no books at the moment!</div>
     <img src="plus.png" id="add" alt="An image of an add button" />
-    <span class="blurredMessageBox">
+    <span class="blurredMessageBox show">
       <div class="messageBox">
-        <input type="text" name="title" id="title" placeholder="Book Title" />
-        <input
-          type="text"
-          name="author"
-          id="author"
-          placeholder="Book Author"
-        />
-        <input
-          type="number"
-          name="pages"
-          id="pages"
-          min="0"
-          placeholder="Number of pages"
-        />
-        <button id="addBtn">Add Book</button>
+        <form>
+          <input type="text" name="title" id="title" placeholder="Book Title" required />
+          <input
+            type="text"
+            name="author"
+            id="author"
+            placeholder="Book Author"
+            required
+          />
+          <input
+            type="number"
+            name="pages"
+            id="pages"
+            min="0"
+            placeholder="Number of pages"
+            required
+          />
+          <span class="error show">
+            <p>&nbsp;</p>
+          </span>
+          <button type="submit" id="addBtn">Add Book</button>
+        </form>
       </div>
     </span>
     <footer>
