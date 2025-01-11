@@ -185,6 +185,35 @@ const domHandler = (() => {
   const author = document.querySelector("#author");
   const pages = document.querySelector("#pages");
 
+  title.addEventListener('input', ()=> {
+    title.setCustomValidity(""); // Always reset first
+
+    if (title.validity.valueMissing) {
+      title.setCustomValidity("Please enter a valid book title.")
+    } else if (title.validity.valid) {
+      title.setCustomValidity("");
+    }
+  });
+
+  author.addEventListener('input', ()=> {
+    author.setCustomValidity(""); // Always reset first
+    
+    if (author.validity.valueMissing) {
+      author.setCustomValidity("Please enter a valid book title.")
+    } else if (author.validity.valid) {
+      author.setCustomValidity("");
+    }
+  });
+
+  pages.addEventListener('input', ()=> {
+    if (pages.validity.rangeUnderflow) {
+      pages.setCustomValidity(`Page should be more than 1 or more. You have entered [${pages.value}] pages.`);
+      console.log(pages.validity.rangeUnderflow);
+    } else {
+      pages.setCustomValidity("");
+    }
+  });
+
   function clearTextBoxesFromMessageBox() {
     title.value = "";
     author.value = "";
@@ -193,8 +222,13 @@ const domHandler = (() => {
 
   const addBookToContainerBtn = document.querySelector("#addBtn");
   addBookToContainerBtn.addEventListener("click", () => {
+    const title = document.querySelector("#title");
+    const author = document.querySelector("#author");
+    const pages = document.querySelector("#pages");
     if (bookShelf.getBookIndex(title.value) !== -1) {
       alert("This book already exists in the list!");
+      return;
+    } else if (title.value === "" || author.value === "" || pages.value === "") {
       return;
     }
 
@@ -263,3 +297,32 @@ class Book {
   }
 }
 bookShelf.init();
+
+// const title = document.querySelector('#title');
+// title.addEventListener('input', function(){
+//   if (title.validity.valueMissing || title.value === "") {
+//     title.setCustomValidity("Please enter a title for this book.");
+//   } else if (title.validity.valid) {
+//     title.setCustomValidity("");
+//   }
+// });
+
+// const author = document.querySelector('#author');
+// author.addEventListener('input', function(){
+//   if (author.validity.valueMissing) {
+//     author.setCustomValidity("Please enter an author for this book.");
+//   } else if (author.validity.valid) {
+//     author.setCustomValidity("");
+//   }
+// });
+
+// const pages = document.querySelector("#pages");
+// pages.addEventListener('input', function(){
+//   console.log("test")
+//   if (pages.validity.rangeUnderflow) {
+//     pages.setCustomValidity(`Please enter a valid number of pages. You entered "${pages.value} pages."`)
+//     console.log("underflow")
+//   } else if (pages.validity.valid) {
+//     pages.setCustomValidity("");
+//   }
+// });
