@@ -218,6 +218,7 @@
         padding: 10px;
         opacity: 0;
         transition: .3s ease all;
+        height: 39px;
       }
 
       .error.show {
@@ -277,7 +278,7 @@
     <img src="plus.png" id="add" alt="An image of an add button" />
     <span class="blurredMessageBox show">
       <div class="messageBox">
-        <form>
+        <form novalidate>
           <input type="text" name="title" id="title" placeholder="Book Title" required />
           <input
             type="text"
@@ -294,9 +295,7 @@
             placeholder="Number of pages"
             required
           />
-          <span class="error show">
-            <p>&nbsp;</p>
-          </span>
+          <span class="error"></span>
           <button type="submit" id="addBtn">Add Book</button>
         </form>
       </div>

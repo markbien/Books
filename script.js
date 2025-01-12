@@ -184,33 +184,55 @@ const domHandler = (() => {
   const title = document.querySelector("#title");
   const author = document.querySelector("#author");
   const pages = document.querySelector("#pages");
+  const errorMessage = document.querySelector('.error');
 
   title.addEventListener('input', ()=> {
-    title.setCustomValidity(""); // Always reset first
-
-    if (title.validity.valueMissing) {
-      title.setCustomValidity("Please enter a valid book title.")
-    } else if (title.validity.valid) {
-      title.setCustomValidity("");
+    if (title.validity.valid) {
+      errorMessage.textContent = "";
+      errorMessage.className = "error";
+    } else {
+      showError();
     }
   });
 
   author.addEventListener('input', ()=> {
-    author.setCustomValidity(""); // Always reset first
-    
-    if (author.validity.valueMissing) {
-      author.setCustomValidity("Please enter a valid book title.")
-    } else if (author.validity.valid) {
-      author.setCustomValidity("");
+    if (author.validity.valid) {
+      errorMessage.textContent = "";
+      errorMessage.className = "error";
+    } else {
+      showError();
     }
   });
 
   pages.addEventListener('input', ()=> {
-    if (pages.validity.rangeUnderflow) {
-      pages.setCustomValidity(`Page should be more than 1 or more. You have entered [${pages.value}] pages.`);
-      console.log(pages.validity.rangeUnderflow);
+    if (pages.validity.valid) {
+      errorMessage.textContent = "";
+      errorMessage.className = "error";
     } else {
-      pages.setCustomValidity("");
+      showError();
+    }
+    console.log(pages.validity.valid);
+  });
+
+  function showError(){
+    if (title.validity.valueMissing) {
+      errorMessage.textContent = "Please enter a valid title name for this book.";
+    } else if (author.validity.valueMissing) {
+      errorMessage.textContent = "Please enter a valid author name for this book.";
+    } else if (pages.validity.valueMissing) {
+      errorMessage.textContent = "Please enter how many pages this book has.";
+    } else if (pages.validity.rangeUnderflow) {
+      errorMessage.textContent = `${pages.value} is invalid. Enter a valid number.`;
+    }
+
+    errorMessage.classList.add("show");
+  }
+
+  const form = document.querySelector('form');
+  form.addEventListener('submit', (e)=> {
+    if (!title.validity.valid || !author.validity.valid || !pages.validity.valid) {
+      showError();
+      e.preventDefault();
     }
   });
 
